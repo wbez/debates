@@ -20,13 +20,13 @@ do_not_write_regex = re.compile(ur'.*DO\s*NOT\s*WRITE\s*BELOW\s*THIS\s*LINE.*',
 end_fact_check_regex = re.compile(ur'^\s*[Ee][Nn][Dd]\s*$',
                                   re.UNICODE)
 
-fact_check_regex = re.compile(ur'^\s*NPR\s*:', re.UNICODE)
+fact_check_regex = re.compile(ur'^\s*WBEZ\s*:', re.UNICODE)
 continuation_regex = re.compile(ur'^\s*CONT\s*:', re.UNICODE)
 speaker_regex = re.compile(ur'^[A-Z0-9\s.-]+(\s\[.*\])?:', re.UNICODE)
 soundbite_regex = re.compile(ur'^\s*:', re.UNICODE)
 
 extract_fact_metadata_regex = re.compile(
-    ur'^\s*(<.*?>)?NPR\s*:\s*(([A-Za-z0-9]{2,3})-[A-Za-z0-9-]+):?(\W.*)',
+    ur'^\s*(<.*?>)?WBEZ\s*:\s*(([A-Za-z0-9]{2,3})-[A-Za-z0-9-]+):?(\W.*)',
     re.UNICODE)
 extract_cont_metadata_regex = re.compile(
     ur'^\s*(<.*?>)?CONT\s*:\s*(.*)', re.UNICODE)
@@ -82,9 +82,9 @@ def transform_fact_check(paragraphs, doc):
                 except KeyError:
                     logger.warning(
                         'did not find author in app_config %s' % author)
-                    author_name = 'NPR Staff'
-                    author_role = 'NPR'
-                    author_page = 'http://www.npr.org/'
+                    author_name = 'WBEZ Staff'
+                    author_role = 'WBEZ'
+                    author_page = 'https://www.wbez.org/'
                     author_img = ''
 
                 # Handle author images, which some authors may not have

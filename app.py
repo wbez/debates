@@ -20,6 +20,7 @@ from flask_cors import CORS, cross_origin
 from render_utils import flatten_app_config, make_context
 from render_utils import smarty_filter, urlencode_filter
 from werkzeug.debug import DebuggedApplication
+from oauth import get_document, get_credentials, get_doc
 
 app = Flask(__name__)
 app.debug = app_config.DEBUG
@@ -38,6 +39,8 @@ def _factcheck():
     """
     Liveblog only contains published posts
     """
+    get_document(app_config.COPY_GOOGLE_DOC_KEY, app_config.COPY_PATH)
+
     context = get_factcheck_context()
     return make_response(render_template('factcheck.html', **context))
 

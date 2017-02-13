@@ -28,7 +28,7 @@ PROJECT_FILENAME = 'debates'
 
 # The name of the repository containing the source
 REPOSITORY_NAME = 'debates'
-GITHUB_USERNAME = 'nprapps'
+GITHUB_USERNAME = 'wbez'
 REPOSITORY_URL = 'git@github.com:%s/%s.git' % (
     GITHUB_USERNAME, REPOSITORY_NAME)
 REPOSITORY_ALT_URL = None  # 'git@bitbucket.org:nprapps/%s.git' % REPOSITORY_NAME'
@@ -39,7 +39,7 @@ ASSETS_SLUG = 'debates'
 
 # DEPLOY SETUP CONFIG
 DEBATE_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_DEBATE = '20170120-trump-inauguration-factcheck'
+CURRENT_DEBATE = 'wbez-debates'
 SEAMUS_ID = '510629447'  # SEAMUS PAGE ID FOR DEEP LINKING
 try:
     from local_settings import CURRENT_DEBATE
@@ -51,13 +51,13 @@ except ImportError:
 """
 DEPLOYMENT
 """
-PRODUCTION_S3_BUCKET = 'apps.npr.org'
+PRODUCTION_S3_BUCKET = 'wbez-debates'
 
-STAGING_S3_BUCKET = 'stage-apps.npr.org'
+STAGING_S3_BUCKET = 'wbez-debates-stage'
 
-ASSETS_S3_BUCKET = 'assets.apps.npr.org'
+ASSETS_S3_BUCKET = 'wbez-assets'
 
-ARCHIVE_S3_BUCKET = 'election-backup.apps.npr.org'
+ARCHIVE_S3_BUCKET = 'wbez-assets'
 
 DEFAULT_MAX_AGE = 20
 
@@ -68,14 +68,14 @@ PRODUCTION_SERVERS = ['54.211.94.130']
 STAGING_SERVERS = ['54.167.46.85']
 
 # Should code be deployed to the web/cron servers?
-DEPLOY_TO_SERVERS = True
+DEPLOY_TO_SERVERS = False
 try:
     # Override whether we should deploy to a cutom webserver
     from local_settings import DEPLOY_TO_SERVERS
 except ImportError:
     pass
 
-DEPLOY_STATIC_FACTCHECK = False
+DEPLOY_STATIC_FACTCHECK = True
 try:
     # Override whether we are going to deploy a static factcheck
     # from our local environment. Useful for non-live factchecks
@@ -125,7 +125,7 @@ AUTOINIT_LOADER = False
 """
 COPY EDITING
 """
-COPY_GOOGLE_DOC_KEY = '1z7TVK16JyhZRzk5ep-Uq5SH4lPTWmjCecvJ5vCp6lS0'
+COPY_GOOGLE_DOC_KEY = '1weq2hlKqAuo3sZZTAylbcF3WAN6jOntfIVk6hnEPyE0'
 COPY_PATH = 'data/copy.xlsx'
 
 TRANSCRIPT_HTML_PATH = 'data/transcript.html'
@@ -137,7 +137,7 @@ GOOGLE APPS SCRIPTS
 
 # PARENT_FOLDER_ID = '0B6C-jdxmvrJoM3JnZ1ZZUkhVQTg'
 GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU' # Google app script logs spreadsheet key
-TRANSCRIPT_GDOC_KEY = '1Byvot9oRRS9gvm2nTFuO4dLiyOrI02f-Xhy6pbMk34s' # Google app script google doc key
+TRANSCRIPT_GDOC_KEY = '1n395I0Qo7WsACZv1b918FZGrvLWmhQ9DwjpZ3rqFbRM' # Google app script google doc key
 SCRIPT_PROJECT_NAME = 'factcheck_scripts' # Google app scripts project name
 CSPAN = False
 
@@ -152,13 +152,13 @@ SHARE_URL = 'http://%s/%s/' % (PRODUCTION_S3_BUCKET, PROJECT_SLUG)
 SERVICES
 """
 NPR_GOOGLE_ANALYTICS = {
-    'ACCOUNT_ID': 'UA-5828686-4',
-    'DOMAIN': PRODUCTION_S3_BUCKET,
+    'ACCOUNT_ID': 'UA-369047-40',
+    'DOMAIN': 'wbez.org',
     'TOPICS': ''  # e.g. '[1014,3,1003,1002,1001]'
 }
 
 VIZ_GOOGLE_ANALYTICS = {
-    'ACCOUNT_ID': 'UA-5828686-75'
+    'ACCOUNT_ID': 'UA-369047-40'
 }
 
 """
@@ -233,7 +233,7 @@ def configure_targets(deployment_target):
 
     if deployment_target == 'production':
         S3_BUCKET = PRODUCTION_S3_BUCKET
-        S3_BASE_URL = '//%s/%s%s' % (S3_BUCKET,
+        S3_BASE_URL = 'https://s3.amazonaws.com/%s/%s%s' % (S3_BUCKET,
                                      DEBATE_DIRECTORY_PREFIX,
                                      CURRENT_DEBATE)
         S3_DEPLOY_URL = 's3://%s/%s' % (S3_BUCKET, PROJECT_SLUG)
@@ -249,7 +249,7 @@ def configure_targets(deployment_target):
         GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU'
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
-        S3_BASE_URL = '//%s/%s%s' % (S3_BUCKET,
+        S3_BASE_URL = 'https://s3.amazonaws.com/%s/%s%s' % (S3_BUCKET,
                                      DEBATE_DIRECTORY_PREFIX,
                                      CURRENT_DEBATE)
         S3_DEPLOY_URL = 's3://%s/%s' % (S3_BUCKET, PROJECT_SLUG)
@@ -260,7 +260,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # STAGING DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1SIdTMAjRhJkQVeUeBAxflSVidYIXPfpQIXDTpJEHvT4'
+        TRANSCRIPT_GDOC_KEY = '1n395I0Qo7WsACZv1b918FZGrvLWmhQ9DwjpZ3rqFbRM'
         # STAGING LOGS
         GAS_LOG_KEY = '1vpRgWpqGqW1p3yMv6nCixAjczc8cJr_TlMCTg52Ch9I'
     else:
@@ -274,7 +274,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # DEVELOPMENT DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1Fn3zEsGuvp0ot0Kamlc7_XR48QzoY4fSyRpO6BV1XsA'
+        TRANSCRIPT_GDOC_KEY = '1n395I0Qo7WsACZv1b918FZGrvLWmhQ9DwjpZ3rqFbRM'
         # DEVELOPMENT LOGS
         GAS_LOG_KEY = '1I7IUCUJHIWLW3c_E-ukfqIp4QxuvUoHqbEQIlKQFC7w'
         # Override S3_BASE_URL to use another port locally for fab app
